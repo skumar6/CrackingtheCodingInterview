@@ -1,3 +1,8 @@
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
+
 /**
  * Created by Sanjeev on 9/28/2016.
  */
@@ -36,4 +41,73 @@ public class LeetCodeProblems {
         return sum;
 
     }
+
+    //max depth of a binary tree
+    public int maxDepth(TreeNode root) {
+        if(root == null)
+            return 0;
+        int l = maxDepth(root.left);
+        int r = maxDepth(root.right);
+
+        return 1+(Math.max(l,r));
+    }
+
+    //find Minmum depth
+    public int minDepth(TreeNode root) {
+        if(root == null)
+            return 0;
+        //check if both nodes are present
+        if(root.right != null && root.left != null){
+            return 1+ Math.min(minDepth(root.left), minDepth(root.right));
+        }else
+            return 1+ Math.max(minDepth(root.left), minDepth(root.right));
+
+
+    }
+
+    //Binary tree level order list of list
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> ls = new LinkedList<List<Integer>>();
+        Queue<TreeNode> q = new LinkedList<TreeNode>();
+        if(root != null)
+            q.add(root);
+        while(!q.isEmpty()){
+            int count = q.size();
+            List<Integer> tmpList = new LinkedList<Integer>();
+            while(count-- > 0){
+                if(q.peek().left != null) q.add(q.peek().left);
+                if(q.peek().right != null) q.add(q.peek().right);
+                tmpList.add(q.poll().val);
+            }
+            ls.add(tmpList);
+        }
+        return ls;
+    }
+
+    //levelorder bottom up list
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+
+        List<List<Integer>> ls = new LinkedList<List<Integer>>();
+        Queue<TreeNode> q = new LinkedList<TreeNode>();
+        Stack s = new Stack();
+        if(root != null)
+            q.add(root);
+        while(!q.isEmpty()){
+            int count = q.size();
+            List<Integer> tmpList = new LinkedList<Integer>();
+            while(count-- > 0){
+                if(q.peek().left != null) q.add(q.peek().left);
+                if(q.peek().right != null) q.add(q.peek().right);
+                tmpList.add(q.poll().val);
+            }
+
+            s.push(tmpList);
+        }
+        while(!s.empty()){
+            ls.add((List)s.pop());
+        }
+        return ls;
+    }
+
+    
 }
