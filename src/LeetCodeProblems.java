@@ -109,5 +109,44 @@ public class LeetCodeProblems {
         return ls;
     }
 
-    
+    //find a different letter in two suffeled strings
+    public char findTheDifference(String s, String t) {
+        char  sums = 0;
+
+        for(int i=0; i<s.length(); i++){
+            sums = (char)(sums ^ s.charAt(i));
+        }
+        for(int i=0; i<t.length(); i++){
+            sums = (char)(sums ^ t.charAt(i));
+        }
+        return sums;
+    }
+
+    //invert a binary tree
+    public TreeNode invertTree(TreeNode root) {
+        if(root == null)
+            return null;
+
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+
+        invertTree(root.left);
+        invertTree(root.right);
+
+        return root;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 }
